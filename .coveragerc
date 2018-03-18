@@ -1,0 +1,18 @@
+[run]
+branch = True
+omit =
+    # Skip cffi builders
+    */build_*.py
+source =
+    cmarkgfm
+    tests/
+
+[paths]
+source =
+    src/cmarkgfm
+    .nox/*/lib/python*/site-packages/cmarkgfm
+
+[report]
+exclude_lines =
+    pragma: no cover
+show_missing = True

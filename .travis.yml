@@ -2,18 +2,20 @@ language: python
 
 matrix:
   include:
-    - python: 2.7
-      env: TOXENV=py27
-    - python: 3.4
-      env: TOXENV=py34
-    - python: 3.5
-      env: TOXENV=py35
     - python: 3.6
-      env: TOXENV=py36
+      env: NOX_SESSION="lint"
+    - python: 2.7
+      env: NOX_SESSION="unit(py='2.7')"
+    - python: 3.4
+      env: NOX_SESSION="unit(py='3.4')"
+    - python: 3.5
+      env: NOX_SESSION="unit(py='3.5')"
+    - python: 3.6
+      env: NOX_SESSION="unit(py='3.6')"
 
-install: pip install tox
+install: pip install nox-automation
 
-script: tox
+script: nox -s "$NOX_SESSION"
 
 notifications:
   email: false
