@@ -6,7 +6,6 @@ Minimalist bindings to GitHub's fork of cmark.
 TODO
 ----
 
-* Add a nox session to regenerate the files in ``generated``.
 * Setup automatic wheel building.
 * Add more tests.
 * docs
