@@ -1,0 +1,9 @@
+# Include the license and readme file
+include LICENSE.txt
+include README.rst
+
+# Include all third_party and generated sources
+# needed to build cmark.
+recursive-include src/cmarkgfm *.h
+recursive-include third_party/cmark/src *.c *.h *.inc
+recursive-include generated *.h

@@ -1,0 +1,16 @@
+# general things to ignore
+build/
+dist/
+*.egg-info/
+*.egg
+*.eggs
+*.py[cod]
+__pycache__/
+*.so
+*~
+
+# due to using t/nox and pytest
+.tox
+.nox
+.cache
+.pytest_cache
