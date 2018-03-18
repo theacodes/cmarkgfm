@@ -10,12 +10,12 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='cmarkgfm',
-    version='0.1.0',
-    description="Minimal binding to GitHub's fork of cmark",
+    version='0.1.0a1',
+    description="Minimal bindings to GitHub's fork of cmark",
     long_description=long_description,
     url='https://github.com/jonparrott/cmarkgfm',
     author='The Python Packaging Authority',
-    author_email='pypa-dev@googlegroups.com',
+    author_email='thea@skeletonbuddy.com, pypa-dev@googlegroups.com',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',

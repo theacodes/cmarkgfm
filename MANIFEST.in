@@ -6,4 +6,5 @@ include README.rst
 # needed to build cmark.
 recursive-include src/cmarkgfm *.h
 recursive-include third_party/cmark/src *.c *.h *.inc
+recursive-include third_party/cmark/extensions *.c *.h *.inc
 recursive-include generated *.h
