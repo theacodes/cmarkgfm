@@ -72,6 +72,24 @@ def markdown_to_html_with_extensions(text, options=0, extensions=None):
     return output
 
 
+def github_flavored_markdown_to_html(text, options=0):
+    """Render the given GitHub-flavored Makrdown to HTML.
+
+    This is a small wrapper over :func:`markdown_to_html_with_extensions` that
+    just applies GitHub's extensions.
+
+    Args:
+        text (str): The text to render to Markdown.
+        options (int): The cmark options.
+
+    Returns:
+        str: The rendered markdown.
+    """
+    return markdown_to_html_with_extensions(
+        text, options=options,
+        extensions=['table', 'autolink', 'tagfilter', 'strikethrough'])
+
+
 def parse_document(text, options=0):
     """Parse a document and return the root node.
 

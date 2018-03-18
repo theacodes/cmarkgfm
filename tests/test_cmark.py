@@ -19,12 +19,11 @@ def test_render_html_with_extensions():
         <p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>\n""")
 
 
-def test_github_flavored_extensions():
+def test_github_flavored_markdown_to_html():
     text = u"Hello, https://pypa.io!"
-    result = cmark.markdown_to_html_with_extensions(
+    result = cmark.github_flavored_markdown_to_html(
         text,
-        options=2048,
-        extensions=['autolink', 'tagfilter', 'table', 'strikethrough'])
+        options=2048)
     assert result == textwrap.dedent("""\
         <p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>\n""")
 
