@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='cmarkgfm',
-    version='0.1.0a1',
+    version='0.1.0a2',
     description="Minimal bindings to GitHub's fork of cmark",
     long_description=long_description,
     url='https://github.com/jonparrott/cmarkgfm',
