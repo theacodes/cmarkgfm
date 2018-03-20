@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#define CMARKEXTENSIONS_STATIC_DEFINE
+
 #include "cmark.h"
 #include "cmark_extension_api.h"
 #include "core-extensions.h"

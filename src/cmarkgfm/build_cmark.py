@@ -13,7 +13,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PACKAGE_ROOT = os.path.abspath(os.path.join(HERE, '../../'))
 SRC_DIR = os.path.join(PACKAGE_ROOT, 'third_party/cmark/src')
 EXTENSIONS_SRC_DIR = os.path.join(PACKAGE_ROOT, 'third_party/cmark/extensions')
-GENERATED_SRC_DIR = os.path.join(PACKAGE_ROOT, 'generated')
+UNIX_GENERATED_SRC_DIR = os.path.join(PACKAGE_ROOT, 'generated', 'unix')
+WIN_GENERATED_SRC_DIR = os.path.join(PACKAGE_ROOT, 'generated', 'windows')
 
 with io.open(os.path.join(HERE, 'cmark.cffi.h'), 'r', encoding='utf-8') as fh:
     CMARK_DEF_H = fh.read()
@@ -55,8 +56,10 @@ def _compiler_type():
 COMPILER_TYPE = _compiler_type()
 if COMPILER_TYPE == 'unix':
     EXTRA_COMPILE_ARGS = ['-std=c99']
-else:
-    EXTRA_COMPILE_ARGS = None
+    GENERATED_SRC_DIR = UNIX_GENERATED_SRC_DIR
+elif COMPILER_TYPE == 'msvc':
+    EXTRA_COMPILE_ARGS = ['/TP']
+    GENERATED_SRC_DIR = WIN_GENERATED_SRC_DIR
 
 
 ffibuilder = cffi.FFI()

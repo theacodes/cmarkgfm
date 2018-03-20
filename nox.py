@@ -1,4 +1,5 @@
 import os
+import platform
 import shutil
 
 import nox
@@ -32,15 +33,19 @@ def lint(session):
 @nox.session
 def regenerate(session):
     """Regenerates header files for cmark under ./generated."""
+    if platform.system() == 'Windows':
+        output_dir = '../generated/windows'
+    else:
+        output_dir = '../generated/unix'
+
     session.virtualenv = False
     session.run(shutil.rmtree, 'build', ignore_errors=True)
     session.run(os.makedirs, 'build')
     session.chdir('build')
     session.run('cmake', '../third_party/cmark')
-    session.run(shutil.copy, 'src/cmark_export.h', '../generated')
-    session.run(shutil.copy, 'src/cmark_version.h', '../generated')
-    session.run(shutil.copy, 'src/config.h', '../generated')
-    session.run(
-        shutil.copy, 'extensions/cmarkextensions_export.h', '../generated')
+    session.run(shutil.copy, 'src/cmark_export.h', output_dir)
+    session.run(shutil.copy, 'src/cmark_version.h', output_dir)
+    session.run(shutil.copy, 'src/config.h', output_dir)
+    session.run(shutil.copy, 'extensions/cmarkextensions_export.h', output_dir)
     session.chdir('..')
     session.run(shutil.rmtree, 'build')
