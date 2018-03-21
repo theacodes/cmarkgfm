@@ -1,4 +1,7 @@
+import platform
+import sys
 from setuptools import setup, find_packages
+from setuptools.command.build_ext import build_ext
 from codecs import open
 from os import path
 
@@ -8,9 +11,21 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
+class custom_build_ext(build_ext):
+    """Custom build_ext command that uses mingw32 when building on Python2.7
+    in Windows."""
+
+    def finalize_options(self):
+        build_ext.finalize_options(self)
+        is_windows = platform.system() == 'Windows'
+        is_py2 = sys.version_info[0] < 3
+        if self.compiler is None and is_windows and is_py2:
+            self.compiler = 'mingw32'
+
+
 setup(
     name='cmarkgfm',
-    version='0.2.0',
+    version='0.3.0',
     description="Minimal bindings to GitHub's fork of cmark",
     long_description=long_description,
     url='https://github.com/jonparrott/cmarkgfm',
@@ -40,4 +55,7 @@ setup(
     },
     zip_safe=False,
     include_package_data=True,
+    cmdclass={
+        'build_ext': custom_build_ext,
+    },
 )

@@ -3,6 +3,7 @@ import distutils.dist
 import glob
 import io
 import os
+import sys
 
 import cffi
 
@@ -54,7 +55,10 @@ def _compiler_type():
 
 
 COMPILER_TYPE = _compiler_type()
-if COMPILER_TYPE == 'unix':
+PY2 = sys.version_info[0] < 3
+# Note: on Python 2.7 in Windows we're using mingw so we use the unix srcs for
+# that as well.
+if COMPILER_TYPE == 'unix' or PY2:
     EXTRA_COMPILE_ARGS = ['-std=c99']
     GENERATED_SRC_DIR = UNIX_GENERATED_SRC_DIR
 elif COMPILER_TYPE == 'msvc':
