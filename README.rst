@@ -35,7 +35,7 @@ To render GitHub-flavored markdown:
 
     import cmarkgfm
 
-    html = cmarkgfm.markdown_to_html(markdown_text)
+    html = cmarkgfm.github_flavored_markdown_to_html(markdown_text)
 
 
 Contributing
