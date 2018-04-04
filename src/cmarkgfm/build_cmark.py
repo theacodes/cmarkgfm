@@ -54,12 +54,14 @@ def _compiler_type():
 
 
 COMPILER_TYPE = _compiler_type()
-if COMPILER_TYPE == 'unix':
+if COMPILER_TYPE in {'unix', 'mingw32'}:
     EXTRA_COMPILE_ARGS = ['-std=c99']
     GENERATED_SRC_DIR = UNIX_GENERATED_SRC_DIR
 elif COMPILER_TYPE == 'msvc':
     EXTRA_COMPILE_ARGS = ['/TP']
     GENERATED_SRC_DIR = WIN_GENERATED_SRC_DIR
+else:
+    raise AssertionError("unsupported compiler: %s" % COMPILER_TYPE)
 
 
 ffibuilder = cffi.FFI()
