@@ -58,12 +58,14 @@ COMPILER_TYPE = _compiler_type()
 PY2 = sys.version_info[0] < 3
 # Note: on Python 2.7 in Windows we're using mingw so we use the unix srcs for
 # that as well.
-if COMPILER_TYPE == 'unix' or PY2:
+if COMPILER_TYPE in {'unix', 'mingw32'} or PY2:
     EXTRA_COMPILE_ARGS = ['-std=c99']
     GENERATED_SRC_DIR = UNIX_GENERATED_SRC_DIR
 elif COMPILER_TYPE == 'msvc':
     EXTRA_COMPILE_ARGS = ['/TP']
     GENERATED_SRC_DIR = WIN_GENERATED_SRC_DIR
+else:
+    raise AssertionError("unsupported compiler: %s" % COMPILER_TYPE)
 
 
 ffibuilder = cffi.FFI()

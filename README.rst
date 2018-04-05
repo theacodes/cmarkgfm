@@ -22,7 +22,7 @@ Usage
 High-level usage is really straightforward. To render normal CommonMark
 markdown:
 
-..code-block:: python
+.. code-block:: python
 
     import cmarkgfm
 
@@ -31,11 +31,11 @@ markdown:
 
 To render GitHub-flavored markdown:
 
-..code-block:: python
+.. code-block:: python
 
     import cmarkgfm
 
-    html = cmarkgfm.markdown_to_html(markdown_text)
+    html = cmarkgfm.github_flavored_markdown_to_html(markdown_text)
 
 
 Contributing
