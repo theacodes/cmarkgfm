@@ -21,11 +21,18 @@ def test_render_html_with_extensions():
 
 def test_github_flavored_markdown_to_html():
     text = u"Hello, https://pypa.io!"
-    result = cmark.github_flavored_markdown_to_html(
-        text,
-        options=2048)
+    result = cmark.github_flavored_markdown_to_html(text)
     assert result == textwrap.dedent("""\
         <p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>\n""")
+
+
+def test_github_flavored_markdown_to_html_pre_tag():
+    text = u"```python\nprint('hello')\n```"
+    result = cmark.github_flavored_markdown_to_html(text)
+    assert result == textwrap.dedent("""\
+        <pre><code class="language-python">print('hello')
+        </code></pre>
+        """)
 
 
 def test_parse_document():

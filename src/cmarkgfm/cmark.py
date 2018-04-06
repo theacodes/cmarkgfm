@@ -5,6 +5,24 @@ from __future__ import unicode_literals
 from cmarkgfm import _cmark
 
 
+class Options(object):
+    CMARK_OPT_DEFAULT = _cmark.lib.CMARK_OPT_DEFAULT
+    CMARK_OPT_SOURCEPOS = _cmark.lib.CMARK_OPT_SOURCEPOS
+    CMARK_OPT_HARDBREAKS = _cmark.lib.CMARK_OPT_HARDBREAKS
+    CMARK_OPT_SAFE = _cmark.lib.CMARK_OPT_SAFE
+    CMARK_OPT_NOBREAKS = _cmark.lib.CMARK_OPT_NOBREAKS
+    CMARK_OPT_NORMALIZE = _cmark.lib.CMARK_OPT_NORMALIZE
+    CMARK_OPT_VALIDATE_UTF8 = _cmark.lib.CMARK_OPT_VALIDATE_UTF8
+    CMARK_OPT_SMART = _cmark.lib.CMARK_OPT_SMART
+    CMARK_OPT_GITHUB_PRE_LANG = _cmark.lib.CMARK_OPT_GITHUB_PRE_LANG
+    CMARK_OPT_LIBERAL_HTML_TAG = _cmark.lib.CMARK_OPT_LIBERAL_HTML_TAG
+    CMARK_OPT_FOOTNOTES = _cmark.lib.CMARK_OPT_FOOTNOTES
+    CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE = (
+        _cmark.lib.CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE)
+    CMARK_OPT_TABLE_PREFER_STYLE_ATTRIBUTES = (
+        _cmark.lib.CMARK_OPT_TABLE_PREFER_STYLE_ATTRIBUTES)
+
+
 def markdown_to_html(text, options=0):
     """Render the given text to Markdown.
 
