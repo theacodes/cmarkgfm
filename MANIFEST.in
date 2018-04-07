@@ -2,6 +2,9 @@
 include LICENSE.txt
 include README.rst
 
+# Include tests
+include tests/*.py
+
 # Include all third_party and generated sources
 # needed to build cmark.
 recursive-include src/cmarkgfm *.h
