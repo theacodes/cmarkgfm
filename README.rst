@@ -12,9 +12,7 @@ and can be installed with `pip` or `pipenv`::
     pip install --user cmarkgfm
     pipenv install cmarkgfm
 
-.. note:: We do not yet distribute wheels for cmarkgfm so you'll need a
-    compiler handy. We want to get those up soon.
-
+Wheels are provided for macOS, Linux, and Windows for Python 2.7, 3.4, 3.5, and 3.6.
 
 Usage
 -----
@@ -49,10 +47,3 @@ License
 
 This project is under the MIT License. It includes components under differing
 copyright under the ``third_party`` directory in this source tree.
-
-
-TODO
-----
-
-* Setup automatic wheel building.
-* Add more tests.

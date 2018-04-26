@@ -19,7 +19,8 @@ class custom_build_ext(build_ext):
         build_ext.finalize_options(self)
         is_windows = platform.system() == 'Windows'
         is_py2 = sys.version_info[0] < 3
-        if self.compiler is None and is_windows and is_py2:
+        is_py34 = sys.version_info[:2] == (3, 4)
+        if self.compiler is None and is_windows and (is_py2 or is_py34):
             self.compiler = 'mingw32'
 
 
