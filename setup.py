@@ -29,9 +29,9 @@ setup(
     version='0.4.2',
     description="Minimal bindings to GitHub's fork of cmark",
     long_description=long_description,
-    url='https://github.com/jonparrott/cmarkgfm',
+    url='https://github.com/theacodes/cmarkgfm',
     author='The Python Packaging Authority',
-    author_email='thea@skeletonbuddy.com, pypa-dev@googlegroups.com',
+    author_email='me@thea.codes, pypa-dev@googlegroups.com',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
@@ -50,9 +50,9 @@ setup(
     setup_requires=["cffi>=1.0.0"],
     install_requires=["cffi>=1.0.0"],
     project_urls={
-        'Bug Reports': 'https://github.com/jonparrott/cmarkgfm/issues',
+        'Bug Reports': 'https://github.com/theacodes/cmarkgfm/issues',
         'Funding': 'https://donate.pypi.org',
-        'Source': 'https://github.com/jonparrott/cmarkgfm',
+        'Source': 'https://github.com/theacodes/cmarkgfm',
     },
     zip_safe=False,
     include_package_data=True,
