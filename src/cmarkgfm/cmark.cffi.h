@@ -64,4 +64,4 @@ cmark_llist *cmark_parser_get_syntax_extensions(cmark_parser *parser);
 
 // /* From core-extensions.h */
 
-void core_extensions_ensure_registered(void);
+void cmark_gfm_core_extensions_ensure_registered(void);
