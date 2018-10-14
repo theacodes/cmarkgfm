@@ -168,7 +168,7 @@ def render_html(root, options=0, extensions=None):
 
 def core_extensions_ensure_registered():
     """Direct wrapper over core_extensions_ensure_registered."""
-    _cmark.lib.core_extensions_ensure_registered()
+    _cmark.lib.cmark_gfm_core_extensions_ensure_registered()
 
 
 def find_syntax_extension(name):

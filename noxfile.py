@@ -5,9 +5,8 @@ import shutil
 import nox
 
 
-@nox.session
-@nox.parametrize('py', ['2.7', '3.4', '3.5', '3.6'])
-def unit(session, py):
+@nox.session(py=['2.7', '2.7-32', '3.4', '3.5', '3.6'])
+def unit(session):
     session.install('pytest', 'pytest-cov')
     session.install('.')
     session.run(
@@ -30,7 +29,7 @@ def lint(session):
     session.run('python', 'setup.py', 'check', '-m', '-r', '-s')
 
 
-@nox.session
+@nox.session(py=False)
 def regenerate(session):
     """Regenerates header files for cmark under ./generated."""
     if platform.system() == 'Windows':
@@ -38,14 +37,13 @@ def regenerate(session):
     else:
         output_dir = '../generated/unix'
 
-    session.virtualenv = False
     session.run(shutil.rmtree, 'build', ignore_errors=True)
     session.run(os.makedirs, 'build')
     session.chdir('build')
     session.run('cmake', '../third_party/cmark')
-    session.run(shutil.copy, 'src/cmark_export.h', output_dir)
-    session.run(shutil.copy, 'src/cmark_version.h', output_dir)
+    session.run(shutil.copy, 'src/cmark-gfm_export.h', output_dir)
+    session.run(shutil.copy, 'src/cmark-gfm_version.h', output_dir)
     session.run(shutil.copy, 'src/config.h', output_dir)
-    session.run(shutil.copy, 'extensions/cmarkextensions_export.h', output_dir)
+    session.run(shutil.copy, 'extensions/cmark-gfm-extensions_export.h', output_dir)
     session.chdir('..')
     session.run(shutil.rmtree, 'build')

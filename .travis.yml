@@ -3,19 +3,22 @@ language: python
 matrix:
   include:
     - python: 3.6
-      env: NOX_SESSION="lint"
-    - python: 2.7
-      env: NOX_SESSION="unit(py='2.7')"
+      env: NOXSESSION="lint"
     - python: 3.4
-      env: NOX_SESSION="unit(py='3.4')"
+      env: NOXSESSION="unit-3.4"
     - python: 3.5
-      env: NOX_SESSION="unit(py='3.5')"
+      env: NOXSESSION="unit-3.5"
     - python: 3.6
-      env: NOX_SESSION="unit(py='3.6')"
+      env: NOXSESSION="unit-3.6"
+    - python: 2.7
+      env: NOXSESSION="unit-2.7"
 
-install: pip install nox-automation
+install:
+# Always install nox into Python 3, regardless of the Python version used.
+- virtualenv -p python3 noxenv
+- noxenv/bin/pip install nox
 
-script: nox -s "$NOX_SESSION"
+script: noxenv/bin/nox
 
 notifications:
   email: false
