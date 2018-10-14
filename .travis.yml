@@ -15,7 +15,7 @@ matrix:
 
 install: pip install nox
 
-script: nox -s "$NOX_SESSION"
+script: nox
 
 notifications:
   email: false
