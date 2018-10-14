@@ -11,7 +11,7 @@ environment:
     - PYTHON: "C:\\Python35-x64"
       NOXSESSION: "unit-3.5"
     - PYTHON: "C:\\Python27"
-      NOXSESSION: "unit-2.7"
+      NOXSESSION: "unit-2.7-32"
 
 matrix:
     fast_finish: true

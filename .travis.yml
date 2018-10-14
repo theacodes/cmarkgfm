@@ -13,9 +13,12 @@ matrix:
     - python: 2.7
       env: NOXSESSION="unit-2.7"
 
-install: python3 -m pip install nox
+install:
+# Always install nox into Python 3, regardless of the Python version used.
+- virtualenv -p python3 noxenv
+- noxenv/bin/pip install nox
 
-script: nox
+script: noxenv/bin/nox
 
 notifications:
   email: false
