@@ -8,10 +8,10 @@ environment:
     # This is because it takes too long to serially go through six to eight
     # iterations.
 
-    - PYTHON: "C:\\Python27"
-      NOXSESSION: "unit-2.7"
     - PYTHON: "C:\\Python35-x64"
       NOXSESSION: "unit-3.5"
+    - PYTHON: "C:\\Python27"
+      NOXSESSION: "unit-2.7"
 
 matrix:
     fast_finish: true
@@ -36,14 +36,11 @@ install:
   # Install the mingw compiler, but only if we're on Python 2.7 or 3.4
   - pip install --no-cache-dir --pre --index https://pypi.anaconda.org/carlkl/simple "mingwpy; python_version < '3.5'"
 
-  # Upgrade to the latest version of pip.
-  - python -m pip install --upgrade pip setuptools
-
   # Install Nox
-  - python -m pip install nox
+  - C:\\Python36-x64\Scripts\pip install nox
 
 build: off
 
 test_script:
   # Run the project tests
-  - nox
+  - C:\\Python36-x64\Scripts\nox

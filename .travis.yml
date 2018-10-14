@@ -4,16 +4,16 @@ matrix:
   include:
     - python: 3.6
       env: NOXSESSION="lint"
-    - python: 2.7
-      env: NOXSESSION="unit-2.7"
     - python: 3.4
       env: NOXSESSION="unit-3.4"
     - python: 3.5
       env: NOXSESSION="unit-3.5"
     - python: 3.6
       env: NOXSESSION="unit-3.6"
+    - python: 2.7
+      env: NOXSESSION="unit-2.7"
 
-install: pip install nox
+install: python3 -m pip install nox
 
 script: nox
 
