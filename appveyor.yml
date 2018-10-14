@@ -42,6 +42,8 @@ install:
   # Install Nox
   - python -m pip install nox
 
+build: off
+
 test_script:
   # Run the project tests
   - nox
