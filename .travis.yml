@@ -1,3 +1,7 @@
+# sudo and dist required for 3.7 builds
+# see https://github.com/travis-ci/travis-ci/issues/9815
+sudo: required
+dist: xenial
 language: python
 
 matrix:
