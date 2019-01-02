@@ -1,12 +1,12 @@
-cmarkgfm - Bindings to GitHub's cmark
-=====================================
+cmarkgfm - Python bindings to GitHub's cmark
+============================================
 
-Minimalist bindings to GitHub's fork of cmark.
+Minimalist Python bindings to GitHub's fork of cmark.
 
 Installation
 ------------
 
-This package is published as `cmarkgfm <https://pypi.org/project/cmarkgfm/>`__
+This package is published on PyPI as `cmarkgfm <https://pypi.org/project/cmarkgfm/>`__
 and can be installed with `pip` or `pipenv`::
 
     pip install --user cmarkgfm
