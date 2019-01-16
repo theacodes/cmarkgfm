@@ -26,12 +26,12 @@ with io.open(os.path.join(HERE, 'cmark_module.h'), 'r', encoding='utf-8') as fh:
 
 def _get_sources(dir, exclude=set()):
     sources = glob.iglob(os.path.join(dir, '*.c'))
-    return [
+    return sorted([
         os.path.relpath(path, start=PACKAGE_ROOT)
         for path in
         sources
         if os.path.basename(path) not in exclude
-    ]
+    ])
 
 
 SOURCES = _get_sources(SRC_DIR, exclude=set(['main.c']))
