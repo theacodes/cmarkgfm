@@ -12,7 +12,7 @@ and can be installed with `pip` or `pipenv`::
     pip install --user cmarkgfm
     pipenv install cmarkgfm
 
-Wheels are provided for macOS, Linux, and Windows for Python 2.7, 3.5, and 3.6.
+Wheels are provided for macOS, Linux, and Windows for Python 2.7, 3.5, 3.6, 3.7, and 3.8.
 
 Usage
 -----
