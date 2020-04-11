@@ -35,6 +35,61 @@ To render GitHub-flavored markdown:
 
     html = cmarkgfm.github_flavored_markdown_to_html(markdown_text)
 
+Advanced Usage
+--------------
+
+**Safe rendering**
+
+CommonMark can render potentially unsafe HTML, including raw HTML, raw Javascript, and potentially unsafe links (including links that run scripts). Although ``github_flavored_markdown_to_html`` prevents some raw HTML tags (including ``script``) from being rendered, it does not block unsafe URLs in links.
+
+Therefore it is recommend to call the rendering method with the SAFE option turned on. The safe option does not render raw HTML or potentially dangerous URLs. (Raw HTML is replaced by a placeholder comment; potentially dangerous URLs are replaced by empty strings.) Dangerous URLs are those that begin with ``javascript:``, ``vbscript:``, ``file:``, or ``data:`` (except for ``image/png``, ``image/gif``, ``image/jpeg``, or ``image/webp`` mime types) To do this, use:
+
+.. code-block:: python
+
+    import cmarkgfm
+    from cmarkgfm.cmark import Options as cmarkgfmOptions
+
+    html = cmarkgfm.markdown_to_html(markdown_text, options=cmarkgfmOptions.CMARK_OPT_SAFE)
+    # or
+    html = cmarkgfm.github_flavored_markdown_to_html(markdown_text, options=cmarkgfmOptions.CMARK_OPT_SAFE)
+
+If you trust the markdown text to not include any unsafe tags and links, then you may skip this.
+
+In version 0.4.0 and earlier, the default behavior is unsafe, as described above. In later versions, the default behavior is *safe*, and to render potentially unsafe HTML pass the ``CMARK_OPT_UNSAFE`` option.
+
+**Options**
+
+Both rendering methods ``markdown_to_html`` and ``github_flavored_markdown_to_html`` have
+an optional ``options`` argument that can be used to activate `options of cmark <https://manpages.debian.org/stretch/cmark/cmark.1.en.html>`_.
+For example:
+
+.. code-block:: python
+
+    import cmarkgfm
+    from cmarkgfm.cmark import Options as cmarkgfmOptions
+
+    html = cmarkgfm.markdown_to_html(markdown_text, options=cmarkgfmOptions.CMARK_OPT_SAFE | cmarkgfmOptions.CMARK_OPT_SMART)
+
+The options are:
+
++---------------------------+---------------------------------------------------+
+| Option                    | Effect                                            |
++===========================+===================================================+
+| CMARK_OPT_SAFE (≤0.4.0)   | Prevents rendering unsafe HTML and links.         |
++---------------------------+---------------------------------------------------+
+| CMARK_OPT_UNSAFE (>0.4.0) | Allows rendering unsafe HTML and links.           |
++---------------------------+---------------------------------------------------+
+| CMARK_OPT_SMART           | Render curly quotes, en/em-dashes, ellipses       |
++---------------------------+---------------------------------------------------+
+| CMARK_OPT_NORMALIZE       | Consolidate adjacent text nodes.                  |
++---------------------------+---------------------------------------------------+
+| CMARK_OPT_HARDBREAKS      | Renders line breaks within paragraphs as ``<br>`` |
++---------------------------+---------------------------------------------------+
+| CMARK_OPT_NOBREAKS        | Render soft line breaks as spaces.                |
++---------------------------+---------------------------------------------------+
+| CMARK_OPT_SOURCEPOS       | Adds ``data-sourcepos`` to HTML tags indicating   |
+|                           | the corresponding line/col ranges in the input    |
++---------------------------+---------------------------------------------------+
 
 Contributing
 ------------
