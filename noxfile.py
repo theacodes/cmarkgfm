@@ -15,10 +15,6 @@ def unit(session):
         '--cov', 'cmarkgfm',
         '--cov', 'tests',
         'tests', *session.posargs)
-    # Use combine because we install the package, combine will collapse the
-    # long path names into short ones because of the [paths] section in
-    # .coveragerc
-    session.run('coverage', 'combine', '.coverage')
     session.run('coverage', 'report', '--show-missing')
 
 
