@@ -25,7 +25,7 @@ class custom_build_ext(build_ext):
 
 setup(
     name='cmarkgfm',
-    version='0.4.2',
+    version='0.5.0',
     description="Minimal bindings to GitHub's fork of cmark",
     long_description=long_description,
     url='https://github.com/theacodes/cmarkgfm',
