@@ -19,8 +19,7 @@ class custom_build_ext(build_ext):
         build_ext.finalize_options(self)
         is_windows = platform.system() == 'Windows'
         is_py2 = sys.version_info[0] < 3
-        is_py34 = sys.version_info[:2] == (3, 4)
-        if self.compiler is None and is_windows and (is_py2 or is_py34):
+        if self.compiler is None and is_windows and is_py2:
             self.compiler = 'mingw32'
 
 
@@ -40,9 +39,10 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     package_dir={'': 'src'},
     packages=find_packages(where='src'),

@@ -56,10 +56,9 @@ def _compiler_type():
 
 COMPILER_TYPE = _compiler_type()
 PY2 = sys.version_info[0] < 3
-PY34 = sys.version_info[:2] == (3, 4)
-# Note: on Python 2.7 and 3.4 in Windows we're using mingw so we use the unix
+# Note: on Python 2.7 in Windows we're using mingw so we use the unix
 # srcs for that as well.
-if COMPILER_TYPE in {'unix', 'mingw32'} or (PY2 or PY34):
+if COMPILER_TYPE in {'unix', 'mingw32'} or PY2:
     EXTRA_COMPILE_ARGS = ['-std=c99']
     GENERATED_SRC_DIR = UNIX_GENERATED_SRC_DIR
 elif COMPILER_TYPE == 'msvc':
