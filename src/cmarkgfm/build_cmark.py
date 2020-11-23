@@ -17,10 +17,13 @@ EXTENSIONS_SRC_DIR = os.path.join(PACKAGE_ROOT, 'third_party/cmark/extensions')
 UNIX_GENERATED_SRC_DIR = os.path.join(PACKAGE_ROOT, 'generated', 'unix')
 WIN_GENERATED_SRC_DIR = os.path.join(PACKAGE_ROOT, 'generated', 'windows')
 
-with io.open(os.path.join(HERE, 'cmark.cffi.h'), 'r', encoding='utf-8') as fh:
+CMARK_DEF_H_PATH = os.path.join(HERE, 'cmark.cffi.h')
+CMARK_MODULE_H_PATH = os.path.join(HERE, 'cmark_module.h')
+
+with io.open(CMARK_DEF_H_PATH, 'r', encoding='utf-8') as fh:
     CMARK_DEF_H = fh.read()
 
-with io.open(os.path.join(HERE, 'cmark_module.h'), 'r', encoding='utf-8') as fh:
+with io.open(CMARK_MODULE_H_PATH, 'r', encoding='utf-8') as fh:
     CMARK_MODULE_H = fh.read()
 
 
