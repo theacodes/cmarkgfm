@@ -10,7 +10,7 @@ on: [push]
 #    types: [created]
 
 jobs:
-  deploy:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -22,21 +22,22 @@ jobs:
         python-version: '3.8'
     - name: Install dependencies
       run: |
+        git submodule update --init --recursive
         python -m pip install --upgrade pip
-        pip install setuptools wheel twine
+        pip install setuptools wheel twine cffi
     - name: Build manylinux Python wheels
       uses: RalfG/python-wheels-manylinux-build@v0.3.2-manylinux2010_x86_64
       with:
         python-versions: 'cp36-cp36m cp37-cp37m cp38-cp38m'
         build-requirements: 'cffi'
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run: |
-        python setup.py sdist bdist_wheel
-        # twine upload dist/*
     - uses: actions/upload-artifact@v2
       with:
         name: dist
         path: dist
+#    - name: Build and publish
+#      env:
+#        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+#        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+#      run: |
+#        python setup.py sdist
+#        # twine upload dist/*
