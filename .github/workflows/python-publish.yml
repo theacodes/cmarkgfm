@@ -3,9 +3,11 @@
 
 name: Build and Publish Python Package
 
-on:
-  release:
-    types: [created]
+on: [push]
+
+#on:
+#  release:
+#    types: [created]
 
 jobs:
   deploy:
