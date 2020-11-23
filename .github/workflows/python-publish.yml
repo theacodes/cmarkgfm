@@ -30,13 +30,13 @@ jobs:
         python-versions: 'cp36-cp36m cp37-cp37m cp38-cp38m'
         build-requirements: 'cffi'
     - name: Build and publish
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         python setup.py sdist bdist_wheel
         # twine upload dist/*
-      with:
-        name: dist-without-markdown
-        path: |
-          dist
