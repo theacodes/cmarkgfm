@@ -16,7 +16,6 @@ jobs:
       - name: Setup virtualenv
         run: |
           # Always install nox into Python 3, regardless of the Python version used.
-          apt install -y virtualenv
           python3 -m venv noxenv
           noxenv/bin/pip install nox
       - name: Run lint
