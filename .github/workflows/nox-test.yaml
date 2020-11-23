@@ -22,5 +22,7 @@ jobs:
       - run: |
           git submodule update --init --recursive
           python -m venv noxenv
+          noxenv/bin/python --version
           noxenv/bin/pip install nox
+          export NOXSESSION="unit-"$(python -c "import sys;print('{}.{}'.format(*sys.version_info[:2]))")
           noxenv/bin/nox
