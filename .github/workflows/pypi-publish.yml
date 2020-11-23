@@ -15,13 +15,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Setup git submodule
+      run: git submodule update --init --recursive
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
     - name: Install dependencies
       run: |
-        git submodule update --init --recursive
         python -m pip install --upgrade pip
         pip install setuptools wheel twine cffi
     - name: Build manylinux Python wheels

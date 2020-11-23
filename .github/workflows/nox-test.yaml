@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Lint
     steps:
+      - uses: actions/checkout@v2
+      - name: Setup git submodule
+        run: git submodule update --init --recursive
       - name: Setup python
         uses: actions/setup-python@v2
         with:
@@ -32,7 +35,7 @@ jobs:
     name: Test Python ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v2
-      - name: Setup submodule
+      - name: Setup git submodule
         run: git submodule update --init --recursive
       - name: Setup python
         uses: actions/setup-python@v2
