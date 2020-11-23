@@ -20,6 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: x64
       - run: |
+          git submodule update --init --recursive
           python -m venv noxenv
           noxenv/bin/pip install nox
           noxenv/bin/nox
