@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '2.7', '3.6', '3.7', '3.8', '3.9', 'pypy3' ]
+        python-version: [ '2.7', '3.6', '3.7', '3.8', '3.9' ]
     name: Test Python ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v2
@@ -46,5 +46,5 @@ jobs:
           noxenv/bin/pip install nox
       - name: Run nox tests
         run: |
-          export NOXSESSION="unit-"$(python -c "import sys;print('{}.{}'.format(*sys.version_info[:2]))")
+          export NOXSESSION="unit-${{ matrix.python-version }}"
           noxenv/bin/nox
