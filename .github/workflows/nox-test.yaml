@@ -20,7 +20,7 @@ jobs:
           python3 -m venv noxenv
           noxenv/bin/pip install nox
       - name: Run lint
-      - run: |
+        run: |
           NOXSESSION="lint" noxenv/bin/nox
 
   test:
@@ -46,6 +46,6 @@ jobs:
           python3 -m venv noxenv
           noxenv/bin/pip install nox
       - name: Run nox tests
-      - run: |
+        run: |
           export NOXSESSION="unit-"$(python -c "import sys;print('{}.{}'.format(*sys.version_info[:2]))")
           noxenv/bin/nox
