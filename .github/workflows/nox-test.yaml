@@ -1,29 +1,51 @@
 
 name: Run nox Tests
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [ '3.6', '3.7', '3.8', '3.9', 'pypy3' ]
-    name: Python ${{ matrix.python-version }}
+    name: Lint
     steps:
-      - uses: actions/checkout@v2
       - name: Setup python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-      - run: |
-          git submodule update --init --recursive
-          python -m venv noxenv
-          noxenv/bin/python --version
+      - name: Setup virtualenv
+        run: |
+          # Always install nox into Python 3, regardless of the Python version used.
+          apt install -y virtualenv
+          python3 -m venv noxenv
           noxenv/bin/pip install nox
+      - name: Run lint
+      - run: |
+          NOXSESSION="lint" noxenv/bin/nox
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ '2.7', '3.6', '3.7', '3.8', '3.9', 'pypy3' ]
+    name: Test Python ${{ matrix.python-version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup submodule
+        run: git submodule update --init --recursive
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+      - name: Setup virtualenv
+        run: |
+          # Always install nox into Python 3, regardless of the Python version used.
+          apt install -y virtualenv
+          python3 -m venv noxenv
+          noxenv/bin/pip install nox
+      - name: Run nox tests
+      - run: |
           export NOXSESSION="unit-"$(python -c "import sys;print('{}.{}'.format(*sys.version_info[:2]))")
           noxenv/bin/nox
