@@ -19,8 +19,8 @@ jobs:
           python3 -m venv noxenv
           noxenv/bin/pip install nox
       - name: Run lint
-        env: NOXSESSION="lint"
         run: |
+          export NOXSESSION="lint"
           noxenv/bin/nox
 
   test:
