@@ -1,7 +1,10 @@
 
 name: Run nox Tests
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+    types: [opened]
 
 jobs:
   lint:
