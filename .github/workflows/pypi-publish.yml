@@ -3,10 +3,9 @@
 
 name: Build and Publish Python Package
 
-on: [pull_request]
-# on:
-#  release:
-#    types: [created]
+on:
+ release:
+   types: [created]
 
 env:
   CIBW_SKIP: "cp27-* cp35-* pp*"
@@ -52,8 +51,8 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
 
-    # - name: Publish
-    #   env:
-    #     TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-    #     TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-    #   run: twine upload --skip-existing dist/*
+      - name: Publish
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: twine upload --skip-existing ./wheelhouse/*
