@@ -4,8 +4,13 @@
 name: Build and Publish Python Package
 
 on:
- release:
-   types: [created]
+  push:
+  pull_request:
+    types: [opened]
+
+# on:
+#  release:
+#    types: [created]
 
 env:
   CIBW_SKIP: "cp27-* cp35-* pp*"
@@ -34,9 +39,9 @@ jobs:
         with:
           python-version: '3.7'
 
-      - name: Install cibuildwheel
+      - name: Install build deps
         run: |
-          python -m pip --disable-pip-version-check install cibuildwheel==1.6.4
+          python -m pip --disable-pip-version-check install cibuildwheel==1.6.4 twine==3.2.0
 
       - name: Install Visual C++ for Python 2.7
         if: runner.os == 'Windows'
@@ -55,4 +60,6 @@ jobs:
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: twine upload --skip-existing ./wheelhouse/*
+        run: |
+          twine check ./wheelhouse/*.whl
+          # twine upload --skip-existing ./wheelhouse/*
