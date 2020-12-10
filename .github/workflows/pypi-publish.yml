@@ -5,7 +5,12 @@ name: Build and Publish Python Package
 
 on:
  release:
-   types: [created]
+   types: [created, edited]
+
+# on:
+#   push:
+#   pull_request:
+#     types: [opened]
 
 env:
   CIBW_SKIP: "cp27-* pp*"
