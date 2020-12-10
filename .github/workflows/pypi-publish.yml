@@ -8,7 +8,7 @@ on:
    types: [created]
 
 env:
-  CIBW_SKIP: "cp27-* cp35-* pp*"
+  CIBW_SKIP: "cp27-* pp*"
 
 jobs:
   build_wheels:
@@ -34,25 +34,44 @@ jobs:
         with:
           python-version: '3.7'
 
-      - name: Install cibuildwheel
+      - name: Install build deps
         run: |
-          python -m pip --disable-pip-version-check install cibuildwheel==1.6.4
+          python -m pip --disable-pip-version-check install cibuildwheel==1.6.4 twine==3.2.0
 
-      - name: Install Visual C++ for Python 2.7
-        if: runner.os == 'Windows'
-        run: |
-          choco install vcpython27 -f -y
+      # - name: Install Compiler for Python 2.7 on Windows
+      #   if: runner.os == 'Windows'
+      #   run: |
+      #     choco install vcpython27 -f -y
+      #     python -m pip --disable-pip-version-check install --no-cache-dir --pre --index https://pypi.anaconda.org/carlkl/simple "mingwpy; python_version < '3.5'"
 
       - name: Build wheels
         run: |
           python -m cibuildwheel --output-dir wheelhouse
 
-      - uses: actions/upload-artifact@v2
-        with:
-          path: ./wheelhouse/*.whl
+      - name: Build sdist
+        if: runner.os == 'Linux'
+        run: |
+          python setup.py sdist
 
-      - name: Publish
+      - name: Publish sdist
+        if: runner.os == 'Linux'
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: twine upload --skip-existing ./wheelhouse/*
+        run: |
+          twine check ./dist/*.tar.gz
+          twine upload --skip-existing ./dist/*
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: |
+            ./wheelhouse/*.whl
+            ./dist/*.tar.gz
+
+      - name: Publish wheels
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          twine check ./wheelhouse/*.whl
+          twine upload --skip-existing ./wheelhouse/*
