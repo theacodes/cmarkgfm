@@ -60,7 +60,9 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          path: ./wheelhouse/*.whl
+          path: |
+            ./wheelhouse/*.whl
+            ./dist/*.tar.gz
 
       - name: Publish
         env:
@@ -68,6 +70,6 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           twine check ./wheelhouse/*.whl
-          twine check ./dist/*
+          twine check ./dist/*.tar.gz
           # twine upload --skip-existing ./wheelhouse/*
           # twine upload --skip-existing ./dist/*
