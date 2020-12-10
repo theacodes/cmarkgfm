@@ -44,14 +44,23 @@ jobs:
       #     choco install vcpython27 -f -y
       #     python -m pip --disable-pip-version-check install --no-cache-dir --pre --index https://pypi.anaconda.org/carlkl/simple "mingwpy; python_version < '3.5'"
 
+      - name: Build wheels
+        run: |
+          python -m cibuildwheel --output-dir wheelhouse
+
       - name: Build sdist
         if: runner.os == 'Linux'
         run: |
           python setup.py sdist
 
-      - name: Build wheels
+      - name: Publish sdist
+        if: runner.os == 'Linux'
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          python -m cibuildwheel --output-dir wheelhouse
+          twine check ./dist/*.tar.gz
+          twine upload --skip-existing ./dist/*
 
       - uses: actions/upload-artifact@v2
         with:
@@ -59,12 +68,10 @@ jobs:
             ./wheelhouse/*.whl
             ./dist/*.tar.gz
 
-      - name: Publish
+      - name: Publish wheels
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           twine check ./wheelhouse/*.whl
-          twine check ./dist/*.tar.gz
           twine upload --skip-existing ./wheelhouse/*
-          twine upload --skip-existing ./dist/*
