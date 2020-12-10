@@ -3,9 +3,15 @@
 
 name: Build and Publish Python Package
 
+# on:
+#  release:
+#    types: [created]
+
+
 on:
- release:
-   types: [created]
+  push:
+  pull_request:
+    types: [opened]
 
 env:
   CIBW_SKIP: "cp27-* pp*"
@@ -60,7 +66,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           twine check ./dist/*.tar.gz
-          twine upload --skip-existing ./dist/*
+          # twine upload --skip-existing ./dist/*
 
       - uses: actions/upload-artifact@v2
         with:
@@ -74,4 +80,4 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           twine check ./wheelhouse/*.whl
-          twine upload --skip-existing ./wheelhouse/*
+          # twine upload --skip-existing ./wheelhouse/*
