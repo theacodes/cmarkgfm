@@ -44,10 +44,11 @@ jobs:
         run: |
           python -m pip --disable-pip-version-check install cibuildwheel==1.6.4 twine==3.2.0
 
-      - name: Install Visual C++ for Python 2.7
+      - name: Install Compiler for Python 2.7 on Windows
         if: runner.os == 'Windows'
         run: |
-          choco install vcpython27 -f -y
+          # choco install vcpython27 -f -y
+          python -m pip --disable-pip-version-check install --no-cache-dir --pre --index https://pypi.anaconda.org/carlkl/simple "mingwpy; python_version < '3.5'"
 
       - name: Build wheels
         run: |
