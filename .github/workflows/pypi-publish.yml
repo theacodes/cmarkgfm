@@ -4,13 +4,8 @@
 name: Build and Publish Python Package
 
 on:
-  push:
-  pull_request:
-    types: [opened]
-
-# on:
-#  release:
-#    types: [created]
+ release:
+   types: [created]
 
 env:
   CIBW_SKIP: "cp27-* pp*"
@@ -71,5 +66,5 @@ jobs:
         run: |
           twine check ./wheelhouse/*.whl
           twine check ./dist/*.tar.gz
-          # twine upload --skip-existing ./wheelhouse/*
-          # twine upload --skip-existing ./dist/*
+          twine upload --skip-existing ./wheelhouse/*
+          twine upload --skip-existing ./dist/*
