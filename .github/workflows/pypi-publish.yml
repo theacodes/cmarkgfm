@@ -48,7 +48,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           # choco install vcpython27 -f -y
-          python -m pip --disable-pip-version-check install --no-cache-dir --pre --index https://pypi.anaconda.org/carlkl/simple "mingwpy; python_version < '3.5'"
+          python -m pip --disable-pip-version-check install --no-cache-dir --pre --index https://pypi.anaconda.org/carlkl/simple "mingwpy'"
 
       - name: Build wheels
         run: |
