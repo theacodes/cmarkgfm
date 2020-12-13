@@ -1,19 +1,17 @@
 # This workflows will upload a Python Package using Twine when a release is created
 # For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
 
-name: Build and Publish Python Package
+name: Build Wheels
 
 on:
- release:
-   types: [created, edited]
-
-# on:
-#   push:
-#   pull_request:
-#     types: [opened]
+  release:
+    types: [created, edited]
+  push:
+  pull_request:
+    types: [opened]
 
 env:
-  CIBW_SKIP: "cp27-* pp*"
+  CIBW_SKIP: "cp27-win* pp*"
 
 jobs:
   build_wheels:
@@ -52,19 +50,20 @@ jobs:
       - name: Build wheels
         run: |
           python -m cibuildwheel --output-dir wheelhouse
+          twine check ./wheelhouse/*.whl
 
       - name: Build sdist
         if: runner.os == 'Linux'
         run: |
           python setup.py sdist
+          twine check ./dist/*.tar.gz
 
       - name: Publish sdist
-        if: runner.os == 'Linux'
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        if: ${{ github.event_name == 'release' && runner.os == 'Linux' && env.TWINE_USERNAME != null }}
         run: |
-          twine check ./dist/*.tar.gz
           twine upload --skip-existing ./dist/*
 
       - uses: actions/upload-artifact@v2
@@ -77,6 +76,6 @@ jobs:
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        if: ${{ github.event_name == 'release' && env.TWINE_USERNAME != null }}
         run: |
-          twine check ./wheelhouse/*.whl
           twine upload --skip-existing ./wheelhouse/*
