@@ -1,5 +1,5 @@
 
-name: Run nox Tests
+name: Nox Tests
 
 on:
   push:
