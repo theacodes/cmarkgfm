@@ -59,10 +59,10 @@ jobs:
           twine check ./dist/*.tar.gz
 
       - name: Publish sdist
-        if: ${{ runner.os == 'Linux' && env.TWINE_USERNAME != null }}
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        if: ${{ github.event_name == 'release' && runner.os == 'Linux' && env.TWINE_USERNAME != null }}
         run: |
           twine upload --skip-existing ./dist/*
 
@@ -76,6 +76,6 @@ jobs:
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        if: ${{ env.TWINE_USERNAME != null }}
+        if: ${{ github.event_name == 'release' && env.TWINE_USERNAME != null }}
         run: |
           twine upload --skip-existing ./wheelhouse/*
