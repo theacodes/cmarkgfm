@@ -59,11 +59,10 @@ jobs:
           twine check ./dist/*.tar.gz
 
       - name: Publish sdist
-        if: runner.os == 'Linux'
+        if: ${{ runner.os == 'Linux' && env.TWINE_USERNAME != null }}
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        if: ${{ env.TWINE_USERNAME != null }}
         run: |
           twine upload --skip-existing ./dist/*
 
