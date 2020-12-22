@@ -107,7 +107,9 @@ def github_flavored_markdown_to_html(text, options=0):
     """
     return markdown_to_html_with_extensions(
         text, options=options,
-        extensions=['table', 'autolink', 'tagfilter', 'strikethrough', 'tasklist'])
+        extensions=[
+            'table', 'autolink', 'tagfilter', 'strikethrough', 'tasklist'
+        ])
 
 
 def parse_document(text, options=0):
