@@ -28,7 +28,9 @@ def test_render_html_with_extensions():
 def test_github_flavored_markdown_to_html():
     text = u"Hello, https://pypa.io!"
     result = cmark.github_flavored_markdown_to_html(text)
-    expected = """<p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>"""
+    expected = """
+        <p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>
+    """
     assert _normalize_ws(result) == _normalize_ws(expected)
 
 
@@ -41,7 +43,7 @@ def test_github_flavored_markdown_to_html_pre_tag():
     """
     assert _normalize_ws(result) == _normalize_ws(expected)
 
-    
+
 def test_github_flavored_markdown_to_html_tasklist():
     text = u"- [X] Task 1 Done\n- [ ] Task 2 Incomplete"
     result = cmark.github_flavored_markdown_to_html(text)
