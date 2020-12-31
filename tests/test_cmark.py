@@ -24,7 +24,6 @@ def test_github_flavored_markdown_to_html():
     result = cmark.github_flavored_markdown_to_html(text)
     assert result == textwrap.dedent("""\
         <p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>\n
-        
         """)
 
 
@@ -43,7 +42,6 @@ def test_github_flavored_markdown_to_html_tasklist():
     assert result == textwrap.dedent("""\
         <ul>\n<li><input type="checkbox" disabled="" /> Task 1 Done</li>\n
         <li><input type="checkbox" disabled="" /> Task 2 Incomplete</li>\n</ul>\n
-        
         """)
 
 
