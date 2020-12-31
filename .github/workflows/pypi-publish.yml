@@ -8,7 +8,7 @@ on:
     types: [created, edited]
   push:
   pull_request:
-    types: [opened]
+    types: [opened, reopened, edited]
 
 env:
   CIBW_SKIP: "cp27-win* pp*"
