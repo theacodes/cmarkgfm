@@ -23,7 +23,9 @@ def test_github_flavored_markdown_to_html():
     text = u"Hello, https://pypa.io!"
     result = cmark.github_flavored_markdown_to_html(text)
     assert result == textwrap.dedent("""\
-        <p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>\n""")
+        <p>Hello, <a href="https://pypa.io">https://pypa.io</a>!</p>\n
+        
+        """)
 
 
 def test_github_flavored_markdown_to_html_pre_tag():
@@ -32,6 +34,16 @@ def test_github_flavored_markdown_to_html_pre_tag():
     assert result == textwrap.dedent("""\
         <pre><code class="language-python">print('hello')
         </code></pre>
+        """)
+
+    
+def test_github_flavored_markdown_to_html_tasklist():
+    text = u"- [X] Task 1 Done\n- [ ] Task 2 Incomplete"
+    result = cmark.github_flavored_markdown_to_html(text)
+    assert result == textwrap.dedent("""\
+        <ul>\n<li><input type="checkbox" disabled="" /> Task 1 Done</li>\n
+        <li><input type="checkbox" disabled="" /> Task 2 Incomplete</li>\n</ul>\n
+        
         """)
 
 
