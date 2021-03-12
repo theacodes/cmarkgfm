@@ -25,7 +25,7 @@ class custom_build_ext(build_ext):
 
 setup(
     name='cmarkgfm',
-    version='0.5.2',
+    version='0.5.3',
     description="Minimal bindings to GitHub's fork of cmark",
     long_description=long_description,
     long_description_content_type="text/x-rst",
