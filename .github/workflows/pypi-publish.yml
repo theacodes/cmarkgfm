@@ -12,6 +12,8 @@ on:
 
 env:
   CIBW_SKIP: "cp27-win* pp*"
+  CIBW_ARCHS_LINUX: auto aarch64
+  CIBW_BEFORE_ALL_LINUX: "yum -y update && yum install -y libffi-devel"
 
 jobs:
   build_wheels:
@@ -39,7 +41,11 @@ jobs:
 
       - name: Install build deps
         run: |
-          python -m pip --disable-pip-version-check install cibuildwheel==1.6.4 twine==3.2.0
+          python -m pip --disable-pip-version-check install cibuildwheel==1.10.0 twine==3.2.0
+
+      - uses: docker/setup-qemu-action@v1
+        if: runner.os == 'Linux'
+        name: Set up QEMU
 
       # - name: Install Compiler for Python 2.7 on Windows
       #   if: runner.os == 'Windows'
