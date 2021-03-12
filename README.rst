@@ -12,9 +12,9 @@ and can be installed with `pip` or `pipenv`::
     pip install --user cmarkgfm
     pipenv install cmarkgfm
 
-Wheels are provided for macOS, Linux, and Windows for Python 2.7&ast;, 3.5, 3.6, 3.7, 3.8 and 3.9.
+Wheels are provided for macOS, Linux, and Windows for Python 2.7\*, 3.5, 3.6, 3.7, 3.8 and 3.9.
 
-&ast; Python 2.7 is not supported on Windows. A PR to build wheels would be welcome.
+\* Python 2.7 is not supported on Windows and will only be supported on other platforms so long as `cibuildwheel <https://cibuildwheel.readthedocs.io/en/stable/>`__ continues to support them.
 
 
 Usage
