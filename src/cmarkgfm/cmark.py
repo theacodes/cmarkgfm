@@ -105,6 +105,13 @@ def github_flavored_markdown_to_html(text, options=0):
     Returns:
         str: The rendered markdown.
     """
+    # ok
+    # Force some more options; see
+    # <https://github.com/theacodes/cmarkgfm/issues/37#issuecomment-852925142>
+    options = (
+        options |
+        Options.CMARK_OPT_GITHUB_PRE_LANG
+    )
     return markdown_to_html_with_extensions(
         text, options=options,
         extensions=[
