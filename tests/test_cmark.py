@@ -38,7 +38,7 @@ def test_github_flavored_markdown_to_html_pre_tag():
     text = u"```python\nprint('hello')\n```"
     result = cmark.github_flavored_markdown_to_html(text)
     expected = """
-        <pre><code class="language-python">print('hello')
+        <pre lang="python"><code>print('hello')
         </code></pre>
     """
     assert _normalize_ws(result) == _normalize_ws(expected)
