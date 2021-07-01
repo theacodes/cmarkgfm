@@ -26,16 +26,16 @@ class Options(object):
 
 
 def markdown_to_html(text, options=0):
-    """Render the given text to Markdown.
+    """Render the given Markdown text to HTML.
 
     This is a direct interface to ``cmark_markdown_to_html``.
 
     Args:
-        text (str): The text to render to Markdown.
+        text (str): The Markdown text to render to HTML.
         options (int): The cmark options.
 
     Returns:
-        str: The rendered markdown.
+        str: The HTML rendered from Markdown.
     """
     encoded_text = text.encode('utf-8')
     raw_result = _cmark.lib.cmark_markdown_to_html(
@@ -44,18 +44,18 @@ def markdown_to_html(text, options=0):
 
 
 def markdown_to_html_with_extensions(text, options=0, extensions=None):
-    """Render the given text to Markdown, using extensions.
+    """Render the given Markdown text to HTML, using extensions.
 
     This is a high-level wrapper over the various functions needed to enable
-    extensions, attach them to a parser, and render html.
+    extensions, attach them to a parser, and render HTML.
 
     Args:
-        text (str): The text to render to Markdown.
+        text (str): The Markdown text to render to HTML.
         options (int): The cmark options.
         extensions (Sequence[str]): The list of extension names to use.
 
     Returns:
-        str: The rendered markdown.
+        str: The HTML rendered from Markdown.
     """
     if extensions is None:
         extensions = []
@@ -95,15 +95,16 @@ def markdown_to_html_with_extensions(text, options=0, extensions=None):
 def github_flavored_markdown_to_html(text, options=0):
     """Render the given GitHub-flavored Makrdown to HTML.
 
-    This is a small wrapper over :func:`markdown_to_html_with_extensions` that
-    just applies GitHub's extensions.
+    This is a small wrapper over :func:`markdown_to_html_with_extensions`.
+
+    The GitHub extensions and the option CMARK_OPT_GITHUB_PRE_LANG are applied.
 
     Args:
-        text (str): The text to render to Markdown.
+        text (str): The Markdown text to render to HTML.
         options (int): The cmark options.
 
     Returns:
-        str: The rendered markdown.
+        str: The HTML rendered from Markdown.
     """
     # Force some more options; see
     # <https://github.com/theacodes/cmarkgfm/issues/37#issuecomment-852925142>
