@@ -49,7 +49,7 @@ def test_github_flavored_markdown_to_html_tasklist():
     result = cmark.github_flavored_markdown_to_html(text)
     expected = """
         <ul>
-        <li><input type="checkbox" disabled="" /> Task 1 Done</li>
+        <li><input type="checkbox" checked="" disabled="" /> Task 1 Done</li>
         <li><input type="checkbox" disabled="" /> Task 2 Incomplete</li>
         </ul>
     """
