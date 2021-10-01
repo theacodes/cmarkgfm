@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from cmarkgfm import _cmark
 
-CMARK_VERSION = "0.29.0.gfm.0"
+CMARK_VERSION = "0.29.0.gfm.2"
 
 
 class Options(object):
