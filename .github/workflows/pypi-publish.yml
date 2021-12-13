@@ -10,11 +10,6 @@ on:
   pull_request:
     types: [opened, reopened, edited, synchronize]
 
-env:
-  CIBW_SKIP: "cp27-win* pp*"
-  CIBW_ARCHS_LINUX: auto aarch64
-  CIBW_BEFORE_ALL_LINUX: "yum -y update && yum install -y libffi-devel"
-
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
