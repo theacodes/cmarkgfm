@@ -1,0 +1,21 @@
+[tool.cibuildwheel]
+build = "*"
+skip = "pp*"
+test-skip = ""
+
+archs = ["auto"]
+
+[tool.cibuildwheel.macos]
+archs = ["auto", "arm64"]
+
+[tool.cibuildwheel.linux]
+archs = ["auto", "aarch64"]
+before-all = "yum -y update && yum install -y libffi-devel"
+
+[[tool.cibuildwheel.overrides]]
+select = "*-musllinux*"
+before-all = "apk add libffi-dev"
+
+[[tool.cibuildwheel.overrides]]
+select = "*-musllinux*"
+before-all = "apk add libffi-dev"
