@@ -25,7 +25,7 @@ class custom_build_ext(build_ext):
 
 setup(
     name='cmarkgfm',
-    version='0.7.0',
+    version='0.8.0',
     description="Minimal bindings to GitHub's fork of cmark",
     long_description=long_description,
     long_description_content_type="text/x-rst",
@@ -33,7 +33,7 @@ setup(
     author='The Python Packaging Authority',
     author_email='me@thea.codes, pypa-dev@googlegroups.com',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
