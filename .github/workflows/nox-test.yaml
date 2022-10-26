@@ -11,19 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     name: Lint
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
       - name: Setup git submodule
         run: git submodule update --init --recursive
+
       - name: Setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
-          python-version: '3.9'
+          python-version: '3.11'
           architecture: x64
+
       - name: Setup virtualenv
         run: |
           # Always install nox into Python 3, regardless of the Python version used.
           python3 -m venv noxenv
           noxenv/bin/pip install nox
+
       - name: Run lint
         run: |
           export NOXSESSION="lint"
@@ -35,21 +39,26 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10', '3.11' ]
+
     name: Test Python ${{ matrix.python-version }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
       - name: Setup git submodule
         run: git submodule update --init --recursive
+
       - name: Setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
+
       - name: Setup virtualenv
         run: |
           # Always install nox into Python 3, regardless of the Python version used.
           python3 -m venv noxenv
           noxenv/bin/pip install nox
+
       - name: Run nox tests
         run: |
           export NOXSESSION="unit-${{ matrix.python-version }}"
