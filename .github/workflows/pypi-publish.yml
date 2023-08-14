@@ -6,9 +6,6 @@ name: Build Wheels
 on:
   release:
     types: [created, edited]
-  push:
-  pull_request:
-    types: [opened, reopened, edited, synchronize]
 
 jobs:
   build_wheels:
@@ -30,7 +27,7 @@ jobs:
           repository: github/cmark-gfm
           path: cmark-gfm
 
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         name: Install Python
         with:
           python-version: '3.11'
