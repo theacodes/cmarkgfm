@@ -4,6 +4,7 @@
 name: Build Wheels
 
 on:
+  workflow_dispatch:
   release:
     types: [created, edited]
 
@@ -30,11 +31,11 @@ jobs:
       - uses: actions/setup-python@v4
         name: Install Python
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install build deps
         run: |
-          python -m pip --disable-pip-version-check install cibuildwheel==2.10.0 twine==4.0.1
+          python -m pip --disable-pip-version-check install cibuildwheel==2.16.2 twine==4.0.2
 
       - uses: docker/setup-qemu-action@v1
         if: runner.os == 'Linux'
