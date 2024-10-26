@@ -35,7 +35,7 @@ jobs:
 
       - name: Install build deps
         run: |
-          python -m pip --disable-pip-version-check install cibuildwheel==2.16.2 twine==4.0.2 setuptools
+          python -m pip --disable-pip-version-check install cibuildwheel==2.21.3 twine==5.1.1 setuptools
 
       - uses: docker/setup-qemu-action@v1
         if: runner.os == 'Linux'
