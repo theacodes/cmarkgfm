@@ -5,7 +5,7 @@ import shutil
 import nox
 
 
-@nox.session(py=['3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12'])
+@nox.session(py=['3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13'])
 def unit(session):
     session.install('pytest', 'pytest-cov')
     session.install('.')
