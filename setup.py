@@ -47,7 +47,7 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     cffi_modules=["src/cmarkgfm/build_cmark.py:ffibuilder"],
-    setup_requires=["cffi>=2.0.0"],
+    setup_requires=["cffi>=2.0.0", "pycparser>=2.06"],
     install_requires=["cffi>=2.0.0"],
     project_urls={
         'Bug Reports': 'https://github.com/theacodes/cmarkgfm/issues',
