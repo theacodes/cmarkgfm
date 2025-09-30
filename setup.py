@@ -43,10 +43,12 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
     ],
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     cffi_modules=["src/cmarkgfm/build_cmark.py:ffibuilder"],
+    python_requires='>=3.9',
     setup_requires=["cffi>=2.0.0", "pycparser>=2.06"],
     install_requires=["cffi>=2.0.0"],
     project_urls={
