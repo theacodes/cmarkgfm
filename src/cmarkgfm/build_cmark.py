@@ -3,7 +3,6 @@ import distutils.dist
 import glob
 import io
 import os
-import sys
 
 import cffi
 
@@ -58,10 +57,11 @@ def _compiler_type():
 
 
 COMPILER_TYPE = _compiler_type()
-PY2 = sys.version_info[0] < 3
-# Note: on Python 2.7 in Windows we're using mingw so we use the unix
-# srcs for that as well.
-if COMPILER_TYPE in {'unix', 'mingw32'} or PY2:
+# Note: on Windows with MSVC the compiler type is 'msvc'. On macOS and
+# Linux it is 'unix'. For MinGW on Windows distutils reports 'mingw32'.
+# Select the appropriate compile args and generated sources directory
+# based solely on the compiler type.
+if COMPILER_TYPE in {'unix', 'mingw32'}:
     EXTRA_COMPILE_ARGS = ['-std=c99']
     GENERATED_SRC_DIR = UNIX_GENERATED_SRC_DIR
 elif COMPILER_TYPE == 'msvc':
