@@ -1,13 +1,12 @@
 """Python bindings to GitHub's cmark Markdown library."""
 
-from __future__ import unicode_literals
 
 from cmarkgfm import _cmark
 
 CMARK_VERSION = "0.29.0.gfm.2"
 
 
-class Options(object):
+class Options:
     CMARK_OPT_DEFAULT = _cmark.lib.CMARK_OPT_DEFAULT
     CMARK_OPT_SOURCEPOS = _cmark.lib.CMARK_OPT_SOURCEPOS
     CMARK_OPT_HARDBREAKS = _cmark.lib.CMARK_OPT_HARDBREAKS
@@ -66,7 +65,7 @@ def markdown_to_html_with_extensions(text, options=0, extensions=None):
     for extension_name in extensions:
         extension = find_syntax_extension(extension_name)
         if extension is None:
-            raise ValueError('Unknown extension {}'.format(extension_name))
+            raise ValueError(f'Unknown extension {extension_name}')
         cmark_extensions.append(extension)
 
     parser = parser_new(options=options)

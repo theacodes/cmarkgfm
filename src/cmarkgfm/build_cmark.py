@@ -1,7 +1,6 @@
 import distutils.ccompiler
 import distutils.dist
 import glob
-import io
 import os
 
 import cffi
@@ -19,10 +18,10 @@ WIN_GENERATED_SRC_DIR = os.path.join(PACKAGE_ROOT, 'generated', 'windows')
 CMARK_DEF_H_PATH = os.path.join(HERE, 'cmark.cffi.h')
 CMARK_MODULE_H_PATH = os.path.join(HERE, 'cmark_module.h')
 
-with io.open(CMARK_DEF_H_PATH, 'r', encoding='utf-8') as fh:
+with open(CMARK_DEF_H_PATH, encoding='utf-8') as fh:
     CMARK_DEF_H = fh.read()
 
-with io.open(CMARK_MODULE_H_PATH, 'r', encoding='utf-8') as fh:
+with open(CMARK_MODULE_H_PATH, encoding='utf-8') as fh:
     CMARK_MODULE_H = fh.read()
 
 
@@ -36,7 +35,7 @@ def _get_sources(dir, exclude=set()):
     ])
 
 
-SOURCES = _get_sources(SRC_DIR, exclude=set(['main.c']))
+SOURCES = _get_sources(SRC_DIR, exclude={'main.c'})
 SOURCES.extend(_get_sources(EXTENSIONS_SRC_DIR))
 
 
