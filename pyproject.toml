@@ -1,3 +1,43 @@
+[build-system]
+requires = ["setuptools>=80.9.0", "cffi>=2.0.0", "pycparser>=2.06"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmarkgfm"
+version = "2024.11.20"
+description = "Minimal bindings to GitHub's fork of cmark"
+readme = "README.rst"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [
+    {name = "The Python Packaging Authority", email = "me@thea.codes"},
+    {email = "pypa-dev@googlegroups.com"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "cffi>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/theacodes/cmarkgfm"
+"Bug Reports" = "https://github.com/theacodes/cmarkgfm/issues"
+Funding = "https://donate.pypi.org"
+Source = "https://github.com/theacodes/cmarkgfm"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.cibuildwheel]
 build = "*"
 skip = "pp*"
@@ -16,6 +56,22 @@ before-all = "yum -y update && yum install -y libffi-devel"
 select = "*-musllinux*"
 before-all = "apk add libffi-dev"
 
-[[tool.cibuildwheel.overrides]]
-select = "*-musllinux*"
-before-all = "apk add libffi-dev"
+[tool.coverage.run]
+branch = true
+omit = [
+    # Skip cffi builders
+    "*/build_*.py",
+]
+source = [
+    "cmarkgfm",
+    "tests/",
+]
+
+[tool.coverage.paths]
+source = [
+    "src/cmarkgfm",
+    ".nox/*/lib/python*/site-packages/cmarkgfm",
+]
+
+[tool.coverage.report]
+show_missing = true

@@ -1,13 +1,8 @@
-# Include the license and readme file
-include LICENSE.txt
-include README.rst
-
 # Include tests
 include tests/*.py
 
-# Include all third_party and generated sources
-# needed to build cmark.
-recursive-include src/cmarkgfm *.h
+# Include all third_party and generated sources needed to build cmark.
+# Note: src/cmarkgfm/*.h files are automatically included via include-package-data
 recursive-include third_party/cmark/src *.c *.h *.inc
 recursive-include third_party/cmark/extensions *.c *.h *.inc
 recursive-include generated *.h
