@@ -25,7 +25,10 @@ jobs:
         run: |
           # Always install nox into Python 3, regardless of the Python version used.
           python3 -m venv noxenv
-          noxenv/bin/pip install nox
+          # TODO: Switch back to released version once PR #999 is included in a release
+          # https://github.com/wntrblm/nox/pull/999
+          noxenv/bin/pip install git+https://github.com/wntrblm/nox.git
+          # noxenv/bin/pip install nox
 
       - name: Run lint
         run: |
@@ -37,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13', '3.14' ]
+        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13', '3.14', '3.14t' ]
 
     name: Test Python ${{ matrix.python-version }}
     steps:
@@ -50,13 +53,15 @@ jobs:
         uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: ${{ matrix.python-version }}
-          allow-prereleases: true # For Python 3.14 pre-releases
 
       - name: Setup virtualenv
         run: |
           # Always install nox into Python 3, regardless of the Python version used.
           python3 -m venv noxenv
-          noxenv/bin/pip install nox
+          # TODO: Switch back to released version once PR #999 is included in a release
+          # https://github.com/wntrblm/nox/pull/999
+          noxenv/bin/pip install git+https://github.com/wntrblm/nox.git
+          # noxenv/bin/pip install nox
 
       - name: Run nox tests
         run: |
