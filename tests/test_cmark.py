@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 
+import sys
 import textwrap
+
+import pytest
 
 from cmarkgfm import cmark
 
@@ -60,12 +63,14 @@ def test_parse_document():
     text = u"Hello, **world**!"
     result = cmark.parse_document(text)
     assert result is not None
+    cmark.node_free(result)
 
 
 def test_render_html():
     text = u"Hello, **world**!"
     root = cmark.parse_document(text)
     result = cmark.render_html(root)
+    cmark.node_free(root)
     assert result == '<p>Hello, <strong>world</strong>!</p>\n'
 
 
@@ -75,6 +80,7 @@ def test_parser_interface():
     cmark.parser_feed(parser, text)
     root = cmark.parser_finish(parser)
     result = cmark.render_html(root)
+    cmark.node_free(root)
     cmark.parser_free(parser)
     assert result == '<p>Hello, <strong>world</strong>!</p>\n'
 
@@ -91,3 +97,29 @@ def test_find_syntax_extension():
 def test_find_syntax_extension_doesnt_exist():
     extension = cmark.find_syntax_extension('notarealext')
     assert extension is None
+
+
+def _peak_rss_mb():
+    import resource
+
+    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    # ru_maxrss is in bytes on macOS and kilobytes elsewhere.
+    return peak / (1024 * 1024 if sys.platform == 'darwin' else 1024)
+
+
+@pytest.mark.skipif(sys.platform == 'win32', reason='needs resource module')
+@pytest.mark.parametrize('render', [
+    cmark.markdown_to_html,
+    lambda text: cmark.markdown_to_html_with_extensions(
+        text, extensions=['table', 'strikethrough']),
+], ids=['markdown_to_html', 'markdown_to_html_with_extensions'])
+def test_rendering_releases_memory(render):
+    # Each render used to leak its syntax tree and HTML output, roughly
+    # 1-5x the input size, so 2000 renders of 64 KB grew by 100+ MB.
+    text = '\n\n'.join(['Some *markdown* text, ~~struck~~.'] * 1800)
+    for _ in range(50):
+        render(text)
+    before = _peak_rss_mb()
+    for _ in range(2000):
+        render(text)
+    assert _peak_rss_mb() - before < 20

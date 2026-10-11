@@ -31,11 +31,15 @@ void          cmark_llist_free_full (cmark_mem         * mem,
 void          cmark_llist_free      (cmark_mem         * mem,
                                      cmark_llist       * head);
 
+cmark_mem *cmark_get_default_mem_allocator(void);
+
 const char *cmark_version_string();
 char *cmark_markdown_to_html(const char *text, size_t len, int options);
 cmark_node *cmark_parse_document(const char *buffer, size_t len, int options);
+void cmark_node_free(cmark_node *node);
 cmark_node_type cmark_node_get_type(cmark_node *node);
 char *cmark_render_html(cmark_node *root, int options, cmark_llist *extensions);
+char *cmark_render_html_with_mem(cmark_node *root, int options, cmark_llist *extensions, cmark_mem *mem);
 cmark_parser *cmark_parser_new(int options);
 void cmark_parser_free(cmark_parser *parser);
 void cmark_parser_feed(cmark_parser *parser, const char *buffer, size_t len);

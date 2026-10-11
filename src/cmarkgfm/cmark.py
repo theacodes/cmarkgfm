@@ -39,7 +39,9 @@ def markdown_to_html(text, options=0):
     encoded_text = text.encode('utf-8')
     raw_result = _cmark.lib.cmark_markdown_to_html(
         encoded_text, len(encoded_text), options)
-    return _cmark.ffi.string(raw_result).decode('utf-8')
+    # cmark_markdown_to_html allocates its result with the default allocator.
+    return _decode_and_free(
+        raw_result, _cmark.lib.cmark_get_default_mem_allocator())
 
 
 def markdown_to_html_with_extensions(text, options=0, extensions=None):
@@ -76,14 +78,21 @@ def markdown_to_html_with_extensions(text, options=0, extensions=None):
 
         parser_feed(parser, text)
 
+        # The parser hands ownership of the tree to the caller.
         root = parser_finish(parser)
 
-        if _cmark.lib.cmark_node_get_type(root) == _cmark.lib.CMARK_NODE_NONE:
-            raise ValueError('Error parsing markdown!')
+        try:
+            if (_cmark.lib.cmark_node_get_type(root) ==
+                    _cmark.lib.CMARK_NODE_NONE):
+                raise ValueError('Error parsing markdown!')
 
-        extensions_ll = parser_get_syntax_extensions(parser)
+            extensions_ll = parser_get_syntax_extensions(parser)
 
-        output = render_html(root, options=options, extensions=extensions_ll)
+            output = render_html(
+                root, options=options, extensions=extensions_ll)
+        finally:
+            if root != _cmark.ffi.NULL:
+                node_free(root)
 
     finally:
         parser_free(parser)
@@ -127,10 +136,21 @@ def parse_document(text, options=0):
 
     Returns:
         Any: Opaque reference to the root node of the parsed syntax tree.
+            The caller owns the tree and should release it with
+            :func:`node_free`.
     """
     encoded_text = text.encode('utf-8')
     return _cmark.lib.cmark_parse_document(
         encoded_text, len(encoded_text), options)
+
+
+def node_free(node):
+    """Direct wrapper over cmark_node_free.
+
+    Frees a node and all of its children, such as the syntax tree returned by
+    :func:`parse_document` or :func:`parser_finish`.
+    """
+    _cmark.lib.cmark_node_free(node)
 
 
 def parser_new(options=0):
@@ -151,7 +171,11 @@ def parser_feed(parser, text):
 
 
 def parser_finish(parser):
-    """Direct wrapper over cmark_parser_finish."""
+    """Direct wrapper over cmark_parser_finish.
+
+    The caller owns the returned syntax tree and should release it with
+    :func:`node_free`; :func:`parser_free` does not free it.
+    """
     return _cmark.lib.cmark_parser_finish(parser)
 
 
@@ -170,10 +194,21 @@ def render_html(root, options=0, extensions=None):
     if extensions is None:
         extensions = _cmark.ffi.NULL
 
-    raw_result = _cmark.lib.cmark_render_html(
-        root, options, extensions)
+    # cmark_render_html allocates with the tree's allocator, which isn't
+    # reachable from here, so pass one explicitly and free with the same.
+    mem = _cmark.lib.cmark_get_default_mem_allocator()
+    raw_result = _cmark.lib.cmark_render_html_with_mem(
+        root, options, extensions, mem)
 
-    return _cmark.ffi.string(raw_result).decode('utf-8')
+    return _decode_and_free(raw_result, mem)
+
+
+def _decode_and_free(raw_result, mem):
+    """Copy a C string returned by cmark into Python, then free it."""
+    try:
+        return _cmark.ffi.string(raw_result).decode('utf-8')
+    finally:
+        mem.free(raw_result)
 
 
 def core_extensions_ensure_registered():
